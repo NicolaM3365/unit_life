@@ -24,11 +24,15 @@ python -m django --version
 # *** Activity 3 - Check the Django-admin tool ***
 django-admin
 # The above will show available sub commands. For now we will use only startproject.
+# If for some reason the command django-admin gives you trouble, you can use this instead:
+    python -m django
 
 # *** Activity 4 - Create a new project ***
 django-admin startproject django_project
 # The command above will create a Django project directory. The directory name will be
 # django_project. The name should be relevant to your project.
+# Alternatively, you can use:
+    python -m django startproject django_project
 
 # *** Activity 5 - Familiarise yourself with the "skeleton" project tree
 # Look at the directory structure either in Terminal/VS Code/Sublime etc. Glance at each of the files.
