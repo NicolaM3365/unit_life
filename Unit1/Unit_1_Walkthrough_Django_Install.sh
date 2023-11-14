@@ -8,7 +8,7 @@ python -m venv your_env_name
 
 # *** Activity 0b - Activate the virtual environment ***
 # -->If on Git bash/macOS/Linux:
-    source your_env_name/bin/activate
+    source your_env_name/Scripts/activate
 # --> If on Windows Command Prompt (cmd):
     your_env_name/Scripts/activate.bat
 
