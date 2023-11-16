@@ -3,3 +3,6 @@ __pycache__/
 
 # virtualenv
 my_django/
+
+# The local database
+db.sqlite3
