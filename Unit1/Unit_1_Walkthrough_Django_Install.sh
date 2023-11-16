@@ -8,11 +8,11 @@ python -m venv your_env_name
 
 # *** Activity 0b - Activate the virtual environment ***
 # -->If on Git bash/macOS/Linux:
-    source your_env_name/include/activate
+    source your_env_name/bin/activate
 # --> If on Windows Command Prompt (cmd):
     your_env_name/Scripts/activate.bat
 
-# Note above, depending on how you installed python, you'll have the `activate` in either `include` or `Scripts`
+# Note above, depending on how you installed python, you'll have the `activate` in either `bin` or `Scripts`
 
 # *** Activity 1 - Install Django inside the virtual environment ***
 pip install django
