@@ -5,7 +5,7 @@ Django Create and app and url routes
 #
 #
 
-0. Follow the instructions from last time to create a new django project.
+0. Follow the instructions from last time to create a new django project and cd into it.
 
 1. Create a blog app inside the website project. Django
 uses a website project and inside this you can have multiple apps. For example
@@ -107,7 +107,7 @@ urls.py is now updated to
 """
 
 from django.urls import path
-from ..import views
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -122,7 +122,7 @@ the logic for the home page.
 """
 
 from django.urls import path
-from ..import views
+from . import views
 
 urlpatterns = [
     path('', views.home, name='blog-home'),
@@ -169,7 +169,7 @@ views.home as below.
 """
 
 from django.urls import path
-from ..import views
+from . import views
 
 urlpatterns = [
     path('', views.home, name='blog-home'),
@@ -270,7 +270,7 @@ def about(request):
 18. Step 2 update urls.py in blog to the following
 """
 from django.urls import path
-from ..import views
+from . import views
 
 urlpatterns = [
     path('', views.home, name='blog-name'),
