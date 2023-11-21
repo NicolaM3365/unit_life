@@ -118,5 +118,35 @@ hacker to get your password (although it could still help them to brute-force it
 #
 #
 
-5. Practise creating a new user from the admin site web interface
+5. Experiment with user management in the admin site.
+
+Play some more with the User model in the admin site (127.0.0.1:8000/admin):
+  Create a couple more more users
+  Verify that a user without the Staff or Superuser fields checked cannot log into the admin site.
+  Try changing user properties and resetting a password (note there's no way to see a passport)
+
+6. Inspect the users in the shell.
+
+Terminate the development server with ctrl + c
+
+Start the Django shell with:
+  python manage.py shell
+
+In the shell, load the User model (we need a special import for it):
+  from django.contrib.auth import get_user_model
+  User = get_user_model()
+
+Now we can inspect the users in the database:
+  User.objects.all() # returns a list of all users
+
+Get the first (most likely admin user by running):
+  admin = User.objects.first()
+
+Inspect the admin user as a dict by running:
+  vars(admin)
+
+
+This is it for now. If you haven't yet done so, now's a good time to learn more
+about Django models by going through Part 2 of the official tutorial:
+https://docs.djangoproject.com/en/4.2/intro/tutorial02/
 """
