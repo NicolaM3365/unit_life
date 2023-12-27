@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'life_blog.apps.LifeBlogConfig',
+    'blog.apps.LifeBlogConfig',
     'users.apps.UsersConfig',
     "crispy_forms", #Updated here
     "crispy_bootstrap5", #Updated here
@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'life_blog/static',
+    BASE_DIR / 'blog/static',
 ]
 
 MEDIA_ROOT = BASE_DIR / 'media' # Newer modern and Pythonic way

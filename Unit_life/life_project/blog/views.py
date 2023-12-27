@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Post
+# from django.shortcuts import render
+# from django.http import HttpResponse
+# from .models import Post
+
 # posts = [
 #     {
 #         'author': 'Steve K',
@@ -22,16 +23,16 @@ from .models import Post
 #     return render(request, 'home.html')
 
 # Create your views here.x
-def home(request):
-    context = {
-        # 'posts': posts
-        'posts': Post.objects.all()
-    }
-    return render(request, 'home.html', context)
+# def home(request):
+#     context = {
+#         # 'posts': posts
+#         'posts': Post.objects.all()
+#     }
+#     return render(request, 'blog/home.html', context)
 
 
-def about(request):
-    return render(request, 'about.html', {'title': 'About'})
+# def about(request):
+#     return render(request, 'about.html', {'title': 'About'})
 
 
 from django.shortcuts import render
@@ -51,7 +52,7 @@ def home(request):
 
 class PostListView(ListView):
     model = Post
-    template_name = 'home.html' # <app>/<model>_<viewtype>.html
+    template_name = 'blog/home.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
 
@@ -76,7 +77,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.author
+        # return self.request.user == post.author
+        if self.request.user == post.author:
+            return True
+        return False
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -84,7 +88,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.author
+        # return self.request.user == post.author
+        if self.request.user == post.author:
+            return True
+        return False
 
 def about(request):
-    return render(request, 'about.html', {'title': 'About'})
+    return render(request, 'blog/about.html', {'title': 'About'})
