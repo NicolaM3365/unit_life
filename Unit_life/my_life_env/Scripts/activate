@@ -67,3 +67,9 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r 2> /dev/null
 fi
+
+
+# set -a; source /Unit_life/life_project/.env_example; set +a
+
+
+
