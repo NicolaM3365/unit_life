@@ -1,0 +1,18 @@
+{% extends 'projectmanager/base.html' %}
+{% block content %}
+  <header>
+    <h1>Welcome to My Project Manager</h1>
+    <nav>
+      <!-- Link to the "Projects" page using the template tag -->
+      <a href="{% url 'projectmanager:project_list' %}">Projects</a>
+    </nav>
+  </header>
+  <h2>Project List</h2>
+  <ul>
+    {% for project in projects %}
+      <li>{{ project.project_name }} - {{ project.description }}</li>
+      {% empty %}
+      <li>No projects available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

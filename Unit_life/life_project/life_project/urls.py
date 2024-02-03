@@ -43,6 +43,8 @@ urlpatterns = [
              template_name='users/password_reset_confirm.html'
          ),
          name='password_reset_confirm'),
+    path('projectmanager/', include('projectmanager.urls')),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
