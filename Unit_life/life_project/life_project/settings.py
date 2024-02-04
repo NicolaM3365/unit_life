@@ -79,6 +79,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'life_project.wsgi.application'
 
 
+
+DATABASES = {
+    'default': dj_database_url.parse('postgres://life_project_ptjw_user:avhOZXKlWwCQLFxyMrYHKFlTDrczN1fH@dpg-cm8qfhed3nmc73b0in00-a/life_project_ptjw', conn_max_age=600)
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -90,7 +95,7 @@ WSGI_APPLICATION = 'life_project.wsgi.application'
 # }
 # DATABASES = {"default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}
 
-DATABASES['default'] = dj_database_url.parse('postgres://life_project_ptjw_user:avhOZXKlWwCQLFxyMrYHKFlTDrczN1fH@dpg-cm8qfhed3nmc73b0in00-a/life_project_ptjw')
+# DATABASES['default'] = dj_database_url.parse('postgres://life_project_ptjw_user:avhOZXKlWwCQLFxyMrYHKFlTDrczN1fH@dpg-cm8qfhed3nmc73b0in00-a/life_project_ptjw')
 
 # DATABASES = {
 #     "default": {
