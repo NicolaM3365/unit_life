@@ -11,10 +11,12 @@ from .views import (
 
 from . import views
 
-app_name = 'projectmanager'
+# app_name = 'projectmanager'
 
 
 urlpatterns = [
+    # print("Mapping 'projectmanager-home' URL pattern..."),
+    path('', ProjectListView.as_view(), name='projectmanager-home'),
     path('', ProjectListView.as_view(), name='projectmanager-home'),
     path('project/<int:pk>/', ProjectDetailView.as_view(), name='project-detail'),
     # path('', views.home, name='projectmanager-home'),

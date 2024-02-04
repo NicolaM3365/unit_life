@@ -58,6 +58,7 @@ def attachment_list(request, project_id, task_id):
 
 
 def home(request):
+    print("Home view accessed...")
     return render(request, 'home.html', {'projects':Project.objects.all()})
 
 class ProjectListView(ListView):
