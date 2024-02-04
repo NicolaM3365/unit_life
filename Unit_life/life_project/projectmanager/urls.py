@@ -1,15 +1,28 @@
 
 from django.urls import path
+
+from .views import (
+    ProjectListView,
+    ProjectDetailView,
+    ProjectCreateView,
+    ProjectUpdateView,
+    ProjectDeleteView
+)
+
 from . import views
 
 app_name = 'projectmanager'
 
 
 urlpatterns = [
-    path('projects/', views.project_list, name='project_list'),
-    path('projects/<int:project_id>/', views.project_detail, name='project_detail'),
-    path('projects/<int:project_id>/tasks/', views.task_list, name='task_list'),
-    path('projects/<int:project_id>/tasks/<int:task_id>/', views.task_detail, name='task_detail'),
-    path('projects/<int:project_id>/tasks/<int:task_id>/comments/', views.comment_list, name='comment_list'),
-    path('projects/<int:project_id>/tasks/<int:task_id>/attachments/', views.attachment_list, name='attachment_list'),
+    path('', ProjectListView.as_view(), name='projectmanager-home'),
+    path('project/<int:pk>/', ProjectDetailView.as_view(), name='project-detail'),
+    # path('', views.home, name='projectmanager-home'),
+    path('about/',views.about, name='projectmanager-about'),
+    path('projects/', views.project_list, name='project-list'),
+    path('projects/<int:project_id>/', views.project_detail, name='project-detail'),
+    path('projects/<int:project_id>/tasks/', views.task_list, name='task-list'),
+    path('projects/<int:project_id>/tasks/<int:task_id>/', views.task_detail, name='task-detail'),
+    path('projects/<int:project_id>/tasks/<int:task_id>/comments/', views.comment_list, name='comment-list'),
+    path('projects/<int:project_id>/tasks/<int:task_id>/attachments/', views.attachment_list, name='attachment-list'),
 ]

@@ -1,7 +1,56 @@
 
+
     {% extends "projectmanager/base.html" %}
 
-    {% block content %}
+    {% block content %}    
+    {% for project in projects.items %}
+    <div class="col">
+      <div class="card h-100 shadow bg-light">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">
+            <i class="fa fa-project-diagram fa-2x text-primary"></i> <!-- Example icon -->
+            <a href="{% url 'project' project_id=project.project_id %}" class="stretched-link text-decoration-none text-dark">{{ project.name }}</a>
+          </h5>
+          <p class="card-text">
+            {{ project.description }}
+            {% if project.managed_project %}
+
+            {% endif %}
+        </p>
+        </div>
+        <div class="card-footer bg-white">
+          <small class="text-muted">Status: <span class="text-success">{{ project.status }}</span></small>
+          <br>          
+          <small class="text-muted">Managed by: <span class="text-success">{{ project.managed_project}}</span></small>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if projects.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ projects.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ projects.number }} of {{ projects.paginator.num_pages }}.
+        </span>
+
+        {% if projects.has_next %}
+            <a href="?page={{ projects.next_page_number }}">next</a>
+            <a href="?page={{ projects.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    {% endblock content %}
+
+
+{% comment %}     
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -14,5 +63,9 @@
               <p class="article-content">{{ post.content }}</p>
             </div>
           </article>
-    {% endfor %}
-{% endblock content %}
+    {% endfor %} {% endcomment %}
+
+
+
+
+
