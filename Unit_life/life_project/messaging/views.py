@@ -7,6 +7,13 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    # UpdateView,
+    DeleteView
+)
 from django.contrib import messages
 from .models import Message
 from .forms import ComposeMessageForm
@@ -22,7 +29,49 @@ from .forms import ComposeMessageForm
 
 
 def home(request):
-    return render(request, 'messaging/home.html', {'posts':InboxView.objects.all()})
+    return render(request, 'messaging/home.html', {'Messages':InboxView.objects.all()})
+
+class MessageListView(ListView):
+    model = Message
+    template_name = 'messaging/home.html' # <app>/<model>_<viewtype>.html
+    context_object_name = 'messages'
+    ordering = ['-timestamp']
+
+
+
+class MessageListView(ListView):
+    model = Message
+    template_name = 'messaging/home.html' # <app>/<model>_<viewtype>.html
+    context_object_name = 'messages'
+    ordering = ['-timestamp']
+
+class MessageDetailView(DetailView):
+    model = Message
+
+class MessageCreateView(LoginRequiredMixin, CreateView):
+    model = Message
+    fields = ['subject', 'body', 'recipient']
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user # Set the sender on the form
+        return super().form_valid(form) # Validate form by running form_valid method from parent class.
+
+class MessageDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Message
+    success_url = "/"
+
+    def test_func(self):
+        message = self.get_object()
+        # return self.request.user == message.sender
+        if self.request.user == message.sender:
+            return True
+        return False
+
+def about(request):
+    return render(request, 'blog/about.html', {'subject': 'About'})
+
+
+
 
 
 class InboxView(ListView):
@@ -57,10 +106,10 @@ def message_detail(request, message_id):
 
 # @login_required
 # def compose_message(request):
-#     if request.method == 'POST':
+#     if request.method == 'Message':
 #         # Handle message composition and sending here
 #         # ...
-#         print("Compose Message View: POST request received")
+#         print("Compose Message View: Message request received")
 #         return redirect('inbox')
 #     print("Compose Message View: GET request received")
 #     return render(request, 'messaging/compose_message.html')
@@ -68,8 +117,8 @@ def message_detail(request, message_id):
 
 @login_required
 def compose_message(request):
-    if request.method == 'POST':
-        form = ComposeMessageForm(request.POST)
+    if request.method == 'Message':
+        form = ComposeMessageForm(request.Message)
         if form.is_valid():
             # Create a new message object
             recipient_username = form.cleaned_data['recipient']

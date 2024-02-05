@@ -1,10 +1,26 @@
 from django.urls import path
-from .views import InboxView
+from .views import (
+    MessageListView,
+    MessageDetailView,
+    MessageCreateView,
+    # MessageUpdateView,
+    MessageDeleteView,
+    InboxView,
+)
+
+from . import views
+
 
 urlpatterns = [
-    path('', InboxView.as_view(), name='messaging-home'),
+    path('', MessageListView.as_view(), name='messaging-home'),
+    path('message/<int:pk>', MessageDetailView.as_view(), name='message-detail'),
+    path('message/new/', MessageCreateView.as_view(), name='message-create'),
+    # path('message/<int:pk>/update/', MessageUpdateView.as_view(), name='message-update'),
+    path('message/<int:pk>/delete/', MessageDeleteView.as_view(), name='message-delete'),
+    path('about/', views.about, name='messaging-about'),
     # Add URLs for sending, archiving, and other message actions.
-    path('inbox/compose/', InboxView.as_view(), name='compose-message'),
+    path('inbox/', InboxView.as_view(), name='inbox'),
+    # path('inbox/compose/', InboxView.as_view(), name='compose-message'),
     path('inbox/sent-items/', InboxView.as_view(), name='sent-items'),
     path('inbox/archive/', InboxView.as_view(), name='archived-messages'),
     path('inbox/delete/', InboxView.as_view(), name='delete'),

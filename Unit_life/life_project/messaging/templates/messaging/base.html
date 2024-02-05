@@ -28,14 +28,14 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'messaging-home' %}">Inbox</a> <!-- Update the URL pattern name as needed -->
+                        <a class="nav-item nav-link" href="{% url 'inbox' %}">Inbox</a> <!-- Update the URL pattern name as needed -->
                         <a class="nav-item nav-link" href="{% url 'sent-items' %}">Sent Items</a> <!-- Update the URL pattern name as needed -->
                         <a class="nav-item nav-link" href="{% url 'archived-messages' %}">Archived Messages</a> <!-- Update the URL pattern name as needed -->
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
-                            <a class="nav-item nav-link" href="{% url 'compose-message' %}">Compose Message</a> <!-- Update the URL pattern name as needed -->
+                            <a class="nav-item nav-link" href="{% url 'message-create' %}">Compose Message</a> <!-- Update the URL pattern name as needed -->
                             <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         {% else %}
