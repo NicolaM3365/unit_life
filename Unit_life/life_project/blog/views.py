@@ -48,7 +48,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def home(request):
-    return render(request, 'home.html', {'posts':Post.objects.all()})
+    return render(request, 'blog/home.html', {'posts':Post.objects.all()})
 
 class PostListView(ListView):
     model = Post

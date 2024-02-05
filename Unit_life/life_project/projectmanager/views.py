@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 def home(request):
-    return render(request, 'home.html', {'projects':Project.objects.all()})
+    return render(request, 'projectmanager/home.html', {'projects':Project.objects.all()})
 
 
 def project_list(request):
@@ -59,7 +59,7 @@ def attachment_list(request, project_id, task_id):
 
 def home(request):
     print("Home view accessed...")
-    return render(request, 'home.html', {'projects':Project.objects.all()})
+    return render(request, 'projectmanager/home.html', {'projects':Project.objects.all()})
 
 class ProjectListView(ListView):
     model = Project

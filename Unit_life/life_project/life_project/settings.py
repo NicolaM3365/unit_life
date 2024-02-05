@@ -34,9 +34,11 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('RENDER_HOSTNAME', '')
 # Application definition
 
 INSTALLED_APPS = [
+    'landingpage.apps.LandingpageConfig',
     'blog.apps.LifeBlogConfig',
     'users.apps.UsersConfig',
     'projectmanager.apps.ProjectManagerConfig',
+    'messaging.apps.MessagingConfig',
     "crispy_forms", #Updated here
     "crispy_bootstrap5", #Updated here
     'django.contrib.admin',

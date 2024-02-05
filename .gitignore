@@ -46,6 +46,8 @@ htmlcov/
 
 # Static files
 /static/
+/staticfiles/
+
 
 # Media files
 /media/

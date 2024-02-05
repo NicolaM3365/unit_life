@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'messaging/main.css' %}"> <!-- Update 'messaging/main.css' with your messaging app's CSS file path -->
+
+    {% if title %}
+        <title>Django Messaging - {{ title }}</title> <!-- Update the title as needed -->
+    {% else %}
+        <title>Django Messaging</title> <!-- Update the default title as needed -->
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="{% url 'messaging-home' %}">Django Messaging App</a> <!-- Update the URL pattern name as needed -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="{% url 'messaging-home' %}">Inbox</a> <!-- Update the URL pattern name as needed -->
+                        <a class="nav-item nav-link" href="{% url 'sent-items' %}">Sent Items</a> <!-- Update the URL pattern name as needed -->
+                        <a class="nav-item nav-link" href="{% url 'archived-messages' %}">Archived Messages</a> <!-- Update the URL pattern name as needed -->
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{% url 'compose-message' %}">Compose Message</a> <!-- Update the URL pattern name as needed -->
+                            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>Message Sidebar</h3>
+                    <p class="text-muted">You can put any information here you'd like.</p>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-light">Message Categories</li>
+                            <li class="list-group-item list-group-item-light">Archived Messages</li>
+                            <!-- Add more messaging-related items as needed -->
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Include any JavaScript libraries or scripts as needed -->
+</body>
+</html>
