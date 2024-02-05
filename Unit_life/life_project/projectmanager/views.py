@@ -69,10 +69,10 @@ class ProjectListView(ListView):
 
 class ProjectDetailView(DetailView):
     model = Project
-
+    
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['project_name', 'description', 'start_date', 'end_date', 'status']
+    fields = ['project_name', 'description', 'start_date', 'end_date', 'status', 'managed_project']
 
     def form_valid(self, form):
         form.instance.author = self.request.user # Set the author on the form

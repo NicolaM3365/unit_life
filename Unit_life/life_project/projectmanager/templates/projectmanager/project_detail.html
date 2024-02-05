@@ -1,0 +1,12 @@
+{% extends "projectmanager/base.html" %}
+
+{% block content %}
+  <h2>Project Detail</h2>
+  <p>Project name: {{ project.name }}</p>
+  <p>Description: {{ project.description }}</p>
+  <p>Start date: {{ project.start_date }}</p>
+  <p>End date: {{ project.end_date }}</p>
+  <p>Status: {{ project.status }}</p>
+  <p>Project manager: {{ project.managed_project }}</p>
+  <a href="{% url 'inbox' %}">Back to Inbox</a>
+{% endblock %}

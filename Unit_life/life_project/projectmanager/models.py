@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from django.urls import reverse
+
 
 
 class Project(models.Model):
@@ -31,6 +33,8 @@ class Project(models.Model):
     def __str__(self):
         return self.project_name
     
+    def get_absolute_url(self): # Change here
+        return reverse('project-detail', kwargs={'pk': self.pk}) # Change here to bring the user to the post detail view
 
 def get_default_user():
     # Implement logic to find the default user
