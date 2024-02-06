@@ -7,3 +7,5 @@ def home(request):
     # Your landing page view logic here
     return render(request, 'landingpage/home.html')
 
+def about(request):
+    return render(request, 'landingpage/about.html', {'title': 'About'})
