@@ -19,7 +19,8 @@
     {% endif %}
 </head>
 <body>
-    <header class="site-header">
+
+<header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
             <a class="navbar-brand mr-4" href="{% url 'landingpage-home' %}">Life App</a>
@@ -37,12 +38,11 @@
                     <a class="nav-item nav-link" href="{% url 'projectmanager-home' %}">Project Manager</a>
                     <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
                     <a class="nav-item nav-link" href="{% url 'messaging-home' %}">Messaging</a>
-                    {% comment %} <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a> {% endcomment %}
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     <form action="{% url 'logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="nav-item nav-link" style="background:none!important; border:none; padding:0!important; font-family:inherit; font-size:inherit; cursor:pointer;">Logout</button>
                     </form>
+                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>

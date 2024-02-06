@@ -10,7 +10,7 @@
                 <a class="mr-2" href="#">{{ message.sender }}</a>
                 <small class="text-muted">{{ message.timestamp|date:'dS, F, Y'}}</small>
               </div>
-              <h2><a class="article-title" href="{% url 'post-detail' message.id %}">{{ message.subject }}</a></h2>
+              <h2><a class="article-title" href="{% url 'message-detail' message.id %}">{{ message.subject }}</a></h2>
               <p class="article-content">{{ message.body }}</p>
             </div>
           </article>

@@ -68,7 +68,7 @@ class MessageDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 def about(request):
-    return render(request, 'blog/about.html', {'subject': 'About'})
+    return render(request, 'messaging/about.html', {'subject': 'About'})
 
 
 

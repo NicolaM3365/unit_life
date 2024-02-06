@@ -32,9 +32,12 @@ from . import views
 
 urlpatterns = [
     path('', ProjectListView.as_view(), name='projectmanager-home'),
+    path('projects/', views.project_list, name='project-list'),
     path('project/<int:pk>/', ProjectDetailView.as_view(), name='project-detail'),
-    path('about/', views.about, name='projectmanager-about'),
     path('project/new/', ProjectCreateView.as_view(), name='project-create'),
+    path('project/<int:pk>/update/', ProjectUpdateView.as_view(), name='project-update'),
+    path('project/<int:pk>/delete/', ProjectDeleteView.as_view(), name='project-delete'),
+    path('about/', views.about, name='projectmanager-about'),
     path('project/<int:project_id>/task/', views.task_list, name='task-list'),
     path('project/<int:project_id>/task/<int:task_id>/', views.task_detail, name='task-detail'),
     path('project/<int:project_id>/task/<int:task_id>/comments/', views.comment_list, name='comment-list'),

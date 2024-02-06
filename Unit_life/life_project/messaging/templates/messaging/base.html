@@ -21,8 +21,10 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'messaging-home' %}">Django Messaging App</a> <!-- Update the URL pattern name as needed -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <a class="navbar-brand mr-4" href="{% url 'landingpage-home' %}">Life App</a> <!-- Update the URL pattern name as needed -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'inbox' %}">Inbox</a> <!-- Update the URL pattern name as needed -->
@@ -39,6 +41,8 @@
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
+            </div>
+            </div>
             </div>
           </div>
         </div>

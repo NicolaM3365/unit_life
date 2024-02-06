@@ -20,7 +20,7 @@ def home(request):
 
 def project_list(request):
     projects = Project.objects.all()
-    paginator = Paginator(projects, 10)  # Show 10 projects per page
+    paginator = Paginator(projects, 5)  # Show 10 projects per page
 
     page_number = request.GET.get('page')
     projects = paginator.get_page(page_number)
