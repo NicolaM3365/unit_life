@@ -9,3 +9,6 @@ def home(request):
 
 def about(request):
     return render(request, 'landingpage/about.html', {'title': 'About'})
+
+def accordian(request):
+    return render(request, 'landingpage/accordian.html', {'title': 'Accordian'})
