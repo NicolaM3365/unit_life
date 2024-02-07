@@ -1,5 +1,12 @@
 
-    {% extends "projectmanager/base.html" %}
-    {% block content %}
-        <h1>Project Manager About!</h1>
-    {% endblock content %}
+{% extends "projectmanager/base.html" %}
+
+{% block title %}
+    Life Project Manager - {{ title }}
+{% endblock title %}
+
+{% block content %}
+    <h1>Project Manager About!</h1>
+    <!-- Other content -->
+{% endblock content %}
+

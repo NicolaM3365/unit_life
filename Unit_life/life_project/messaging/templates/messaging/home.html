@@ -4,7 +4,7 @@
     {% block content %}
     {% for message in messages %}
         <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ message.sender.profile.image.url }}">
+          {% comment %} <img class="rounded-circle article-img" src="{{ message.sender.profile.image.url }}"> {% endcomment %}
             <div class="media-body">
               <div class="article-metadata">
                 <a class="mr-2" href="#">{{ message.sender }}</a>

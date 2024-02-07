@@ -1,0 +1,29 @@
+
+{% extends 'projectmanager/base.html' %}
+{% block title %}Life Calendar{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %} <!-- Updated here to load crispy forms -->
+<div class="" content-section>
+<form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Add Event</legend>
+        {{ form|crispy }} <!-- Updated to load the form and let crispy take care of the formmating -->
+    </fieldset>
+          <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Add</button>
+    </div>
+</form>
+</div>
+
+<h2>Events</h2>
+<ul>
+    {% for event in events %}
+        <li>{{ event.title }} - {{ event.date }}</li>
+    {% empty %}
+        <li>No events yet</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+

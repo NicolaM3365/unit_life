@@ -1,0 +1,24 @@
+{% extends "projectmanager/base.html" %}
+{% block content %}
+  <h2>Task List</h2>
+  <ul>
+    {% for task in tasks %}
+      <li>
+        <a href="{% url 'task-detail' task.id %}">{{ task.task_name }}</a>
+        <!-- Add other task details you want to display here -->
+      </li>
+    {% endfor %}
+  </ul>
+  <!-- Pagination Links -->
+  {% if tasks.has_other_pages %}
+    <div>
+      {% if tasks.has_previous %}
+        <a href="?page={{ tasks.previous_page_number }}">Previous</a>
+      {% endif %}
+      <span>Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}</span>
+      {% if tasks.has_next %}
+        <a href="?page={{ tasks.next_page_number }}">Next</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}
