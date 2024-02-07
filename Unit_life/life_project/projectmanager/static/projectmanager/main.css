@@ -82,22 +82,40 @@ body {
   .account-heading {
     font-size: 2.5rem;
   }
-
-    /* Define smaller font size for pagination links */
-  .pagination a.pagination-link {
-      font-size: 12px; /* Adjust the font size as needed */
+  /* Styles that apply to all devices */
+  .pagination-lg .page-link {
+    padding: 1.25rem 1.5rem;
+    /* Larger padding for larger screens */
+    font-size: 1.25rem;
+    /* Larger font size for readability */
   }
 
-  /* Style the current page information */
-  .pagination .current {
-      font-size: 12px !important; /* Adjust the font size as needed */
-      font-weight: bold; /* Make it bold if desired */
+  /* Media query for devices with a width less than 768px */
+  @media (max-width: 768px) {
+    .pagination-lg .page-link {
+      padding: 0.5rem 0.75rem;
+      /* Smaller padding for smaller screens */
+      font-size: 0.675rem;
+      /* Smaller font size to fit more content */
+    }
+
+    .pagination-lg .page-item .page-link {
+      margin: 0 2px;
+      /* Reduce margin between pagination buttons */
+    }
   }
 
-  /* Additional styling for the pagination container */
-  .pagination {
-      text-align: center;
-      margin-top: 10px; /* Add some spacing if needed */
-  }
+  /* Optional: Adjust for very small screens, further reduce size */
+  @media (max-width: 480px) {
+    .pagination-lg .page-link {
+      padding: 0.25rem 0.5rem;
+      /* Even smaller padding */
+      font-size: 0.625rem;
+      /* Even smaller font size */
+    }
 
-  
+    .pagination-lg .page-item .page-link {
+      margin: 0 1px;
+      /* Further reduce margin between buttons */
+    }
+  }
