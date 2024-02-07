@@ -28,11 +28,11 @@ urlpatterns = [
     
 
       # Task URLs
-    path('project/<int:project_id>/tasks/', TaskListView.as_view(), name='task-list'),
-    path('project/<int:project_id>/task/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
-    path('project/<int:project_id>/task/new/', TaskCreateView.as_view(), name='task-create'),
-    path('project/<int:project_id>/task/<int:pk>/update/', TaskUpdateView.as_view(), name='task-update'),
-    path('project/<int:project_id>/task/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
+    path('project/<int:id>/tasks/', TaskListView.as_view(), name='task-list'),
+    path('project/<int:id>/task/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
+    path('project/<int:id>/task/new/', TaskCreateView.as_view(), name='task-create'),
+    path('project/<int:id>/task/<int:pk>/update/', TaskUpdateView.as_view(), name='task-update'),
+    path('project/<int:id>/task/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
 ]
 
 # from django.urls import path

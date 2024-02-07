@@ -88,6 +88,9 @@ def calendar_view(request):
 
 class ProjectDetailView(DetailView):
     model = Project
+    # template_name = 'projectmanager/project_detail.html'  # Specify your template
+    # context_object_name = 'project'
+    
     
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
