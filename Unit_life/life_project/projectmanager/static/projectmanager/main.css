@@ -83,20 +83,21 @@ body {
     font-size: 2.5rem;
   }
 
-  /* Define smaller font size for pagination links */
-.pagination a.pagination-link {
-    font-size: 12px; /* Adjust the font size as needed */
-}
+    /* Define smaller font size for pagination links */
+  .pagination a.pagination-link {
+      font-size: 12px; /* Adjust the font size as needed */
+  }
 
-/* Style the current page information */
-.pagination .current {
-    font-size: 12px !important; /* Adjust the font size as needed */
-    font-weight: bold; /* Make it bold if desired */
-}
+  /* Style the current page information */
+  .pagination .current {
+      font-size: 12px !important; /* Adjust the font size as needed */
+      font-weight: bold; /* Make it bold if desired */
+  }
 
-/* Additional styling for the pagination container */
-.pagination {
-    text-align: center;
-    margin-top: 10px; /* Add some spacing if needed */
-}
+  /* Additional styling for the pagination container */
+  .pagination {
+      text-align: center;
+      margin-top: 10px; /* Add some spacing if needed */
+  }
 
+  
