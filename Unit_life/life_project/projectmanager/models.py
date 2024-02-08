@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
 from django.urls import reverse
+from django.db.models import Count, F
+from django.db.models.functions import Extract
+
+from django.db.models.functions import Length
+
 
 
 
@@ -10,7 +15,8 @@ class Project(models.Model):
     # Defining the fields for the model
     project_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField()
-    
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=False) 
+
     # Using two separate fields for start and end dates
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
@@ -35,6 +41,25 @@ class Project(models.Model):
     
     def get_absolute_url(self): # Change here
         return reverse('project-detail', kwargs={'pk': self.pk}) # Change here to bring the user to the post detail view
+    @classmethod
+    def get_project_lengths(cls):
+        # Using Django's annotate and F expressions to calculate lengths
+        return cls.objects.annotate(length=Length('project_name') + Length('description')).values_list('length', flat=True)
+
+    @classmethod
+    def projects_per_month(cls):
+        # Using Django's ORM to group and count projects per month and year
+        return cls.objects.annotate(
+            year=Extract('created_at', 'year'),
+            month=Extract('created_at', 'month')
+        ).values('year', 'month').annotate(count=Count('id')).order_by('year', 'month')
+        
+        
+    @classmethod
+    def recent_projects(cls, limit=5):
+        # Simple ORM query to get recent projects
+        return cls.objects.order_by('-created_at')[:limit]
+
 
 def get_default_user():
     # Implement logic to find the default user
@@ -43,6 +68,73 @@ def get_default_user():
 
 def one_week_from_today():
         return timezone.now() + timedelta(weeks=1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def add_task(self, task):
+    self.tasks.append(task)
+
+def total_tasks(self):
+    return len(self.tasks)
+
+def completed_tasks(self):
+    return len([task for task in self.tasks if task.status == "Completed"])
+        
+def get_project_lengths():
+            # An example of how to use raw SQL inside a model
+        sql = text("SELECT length(name) + length(description) FROM projects")
+        return db.session.execute(sql).scalars().all()  # Returns just the integers
+        
+        
+def projects_per_month():
+    sql = text("""
+        SELECT EXTRACT(YEAR FROM created_at) as year, 
+        EXTRACT(MONTH FROM created_at) as month, 
+        COUNT(*) 
+        FROM projects 
+        GROUP BY year, month
+        ORDER BY year, month;
+        """)
+    return db.session.execute(sql).all()
+
+def recent_projects(limit=5):
+    return Project.query.order_by(Project.created_at.desc()).limit(limit).all()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Task(models.Model):
     # Defining the fields for the model

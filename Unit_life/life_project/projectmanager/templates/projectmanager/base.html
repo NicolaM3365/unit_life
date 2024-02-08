@@ -30,6 +30,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'project-list' %}">Projects</a>
               <a class="nav-item nav-link" href="{% url 'projectmanager-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'projectmanager-about' %}">About</a>
             </div>
@@ -37,6 +38,7 @@
             <div class="navbar-nav">
               {% if user.is_authenticated %}
               <a class="nav-item nav-link" href="{% url 'project-create' %}">New Project</a>
+              <a class="nav-item nav-link" href="{% url 'statistics' %}">Statistics</a>
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}

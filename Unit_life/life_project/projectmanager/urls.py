@@ -25,6 +25,7 @@ urlpatterns = [
     path('about/', about, name='projectmanager-about'),
     path('projects/', views.project_list, name='project-list'),
     path('calendar/', calendar_view, name='calendar'),
+    path('statistics/', views.stats, name='statistics'),
     
 
       # Task URLs

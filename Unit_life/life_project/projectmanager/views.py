@@ -2,6 +2,10 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Project
+import statistics
+
 from .models import Project,  Task, TaskComment, TaskAttachment, Event
 from .forms import ProjectForm, EventForm
   # Import the Project model from your app's models.py
@@ -178,3 +182,44 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         # Example: return self.request.user == task.assigned_user
         return True
 
+
+
+
+def stats(request):
+    project_lengths = Project.get_project_lengths()
+    projects_per_month = Project.projects_per_month()
+    recent_projects = Project.recent_projects()
+    
+
+    for project in recent_projects:
+        project.formatted_created_at = project.created_at.strftime('%Y-%m-%d')
+    
+
+
+    if project_lengths:
+        # Using the statistics library to calculate mean and median
+        # Ensure you have imported the statistics module
+        average_length = round(statistics.mean(project_lengths), 2) if project_lengths else 0
+        median_length = round(statistics.median(project_lengths), 2) if project_lengths else 0
+        max_length = round(max(project_lengths), 2) if project_lengths else 0
+        min_length = round(min(project_lengths), 2) if project_lengths else 0
+        total_length = round(sum(project_lengths), 2) if project_lengths else 0
+
+        context = {
+            'projects_exist': True,
+            'average_length': average_length,
+            'median_length': median_length,
+            'max_length': max_length,
+            'min_length': min_length,
+            'total_length': total_length,
+            'projects_per_month': projects_per_month,
+            'recent_projects': recent_projects
+        }
+    else:
+        context = {
+            'projects_exist': False,
+            'projects_per_month': projects_per_month,
+            'recent_projects': recent_projects
+        }
+
+    return render(request, "projectmanager/statistics.html", context)
