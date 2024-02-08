@@ -1,92 +1,99 @@
 {% extends 'projectmanager/base.html' %}
 
 {% block content %}
-
-<div>
-        {% if projects_exist %}
-            <!-- <h2 class="mb-4">Project Statistics Overview</h2> -->
-            <div class="row">
-                <div class="col-md-6 col-lg-3 mb-3">
-                    <div class="card text-white bg-primary">
-                        <div class="card-body">
-                            <h5 class="card-title">Average Length</h5>
-                            <p class="card-text">{{ average_length }} characters</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 mb-3">
-                    <div class="card text-white bg-success">
-                        <div class="card-body">
-                            <h5 class="card-title">Median Length</h5>
-                            <p class="card-text">{{ median_length }} characters</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 mb-3">
-                    <div class="card text-white bg-info">
-                        <div class="card-body">
-                            <h5 class="card-title">Maximum Length</h5>
-                            <p class="card-text">{{ max_length }} characters</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 mb-3">
-                    <div class="card text-white bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">Minimum Length</h5>
-                            <p class="card-text">{{ min_length }} characters</p>
-                        </div>
+    {% if projects_exist %}
+        <!-- Row for Statistics Cards -->
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-3">
+                <div class="card text-white bg-primary">
+                    <!-- Card 1: Average Length -->
+                    <div class="card-body">
+                        <h5 class="card-title">Average Length</h5>
+                        <p class="card-text">{{ average_length }} characters</p>
                     </div>
                 </div>
             </div>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">Total Length of All Projects</h5>
-                    <p class="card-text">{{ total_length }} characters</p>
+            <div class="col-lg-6 col-md-12 mb-3">
+                <div class="card text-white bg-success">
+                    <!-- Card 2: Median Length -->
+                    <div class="card-body">
+                        <h5 class="card-title">Median Length</h5>
+                        <p class="card-text">{{ median_length }} characters</p>
+                    </div>
                 </div>
             </div>
-            
+            <div class="col-lg-6 col-md-12 mb-3">
+                <div class="card text-white bg-info">
+                    <!-- Card 3: Maximum Length -->
+                    <div class="card-body">
+                        <h5 class="card-title">Maximum Length</h5>
+                        <p class="card-text">{{ max_length }} characters</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-3">
+                <div class="card text-white bg-warning">
+                    <!-- Card 4: Minimum Length -->
+                    <div class="card-body">
+                        <h5 class="card-title">Minimum Length</h5>
+                        <p class="card-text">{{ min_length }} characters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- New Section: Projects Per Month -->
-                <div class="col-12 my-3">
-                    <div class="card h-100">
-                        <div class="card-header bg-secondary text-white">
-                            Projects Per Month
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            {% for year, month, count in projects_per_month %}
+        <!-- Total Length Card -->
+        <div class="row">
+            <div class="col-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Length of All Projects</h5>
+                        <p class="card-text">{{ total_length }} characters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Per Month -->
+        <div class="row">
+            <div class="col-12 my-3">
+                <div class="card h-100">
+                    <div class="card-header bg-secondary text-white">
+                        Projects Per Month
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for year, month, count in projects_per_month %}
                             <li class="list-group-item">{{ year }}-{{ month }}: {{ count }} projects</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                        {% endfor %}
+                    </ul>
                 </div>
+            </div>
+        </div>
 
-                <!-- New Section: Recent Projects -->
-                <div class="col-12 my-3">
-                    <div class="card h-100">
-                        <div class="card-header bg-secondary text-white">
-                            Recent Projects
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            {% for project in recent_projects %}
-                                <li class="list-group-item">{{ project.name }} - Created on {{ project.created_at }}</li>
-                            {% endfor %}
-                        </ul>
+        <!-- Recent Projects -->
+        <div class="row">
+            <div class="col-12 my-3">
+                <div class="card h-100">
+                    <div class="card-header bg-secondary text-white">
+                        Recent Projects
                     </div>
+                    <ul class="list-group list-group-flush">
+                        {% for project in recent_projects %}
+                            <li class="list-group-item">{{ project.name }} - Created on {{ project.created_at }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                No projects yet!
-            </div>
-        {% endif %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No projects yet!
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12 my-3">
+            <a href="{% url 'project-list' %}" class="btn btn-primary">View All Projects</a>
+        </div>
     </div>
-    <div class="col-12 my-3">
-        <a href="{% url 'project-list' %}" class="btn btn-primary">View All Projects</a>
 {% endblock %}
-
-
-
-
-
-
