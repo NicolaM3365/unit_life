@@ -105,19 +105,6 @@ def recent_projects(limit=5):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Task(models.Model):
     # Defining the fields for the model
     task_name = models.CharField(max_length=200, default='New Task')

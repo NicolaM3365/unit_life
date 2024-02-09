@@ -19,15 +19,6 @@ from .models import Message
 from .forms import ComposeMessageForm
 
 
-
-
-# class InboxView(ListView):
-#     model = Message
-#     template_name = 'messaging/inbox.html'
-#     context_object_name = 'messages'
-#     queryset = Message.objects.filter(is_archived=False)
-
-
 def home(request):
     return render(request, 'messaging/home.html', {'Messages':InboxView.objects.all()})
 

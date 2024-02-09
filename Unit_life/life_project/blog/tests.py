@@ -78,7 +78,7 @@ class PostViewsTests(TestCase):
         post_response = self.client.post(url, {
             'title': 'Updated title',
             'content': 'Updated text',
-         })
+        })
 
         self.post.refresh_from_db()
         self.assertEqual(post_response.status_code, 302)  # Redirect after POST

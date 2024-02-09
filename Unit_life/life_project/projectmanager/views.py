@@ -11,7 +11,7 @@ import statistics
 
 from .models import Project,  Task, TaskComment, TaskAttachment, Event
 from .forms import ProjectForm, EventForm
-  # Import the Project model from your app's models.py
+# Import the Project model from your app's models.py
 from django.views.generic import (
     ListView,
     DetailView,
