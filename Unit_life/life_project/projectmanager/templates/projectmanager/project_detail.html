@@ -1,48 +1,91 @@
-{% comment %} {% extends "projectmanager/base.html" %}
-
-{% block content %}
-  <div class="project-detail">
-  <h2>Project Detail</h2>
-  
-  <p>Project name: {{ project.project_name }}</p>
-  <p>Description: {{ project.description }}</p>
-  <p>Managed by: {{ project.managed_project.username }}</p>
-
-  <p>Start date: {{ project.start_date }}</p>
-  <p>End date: {{ project.end_date }}</p>
-  <p>Status: {{ project.get_status_display }}</p>
-  <p>Project manager: {{ project.managed_project }}</p>
-  <div class="project-actions">
-    <a href="{% url 'project-list' %}" class="btn btn-back">Back to Project List</a>
-    <a href="{% url 'task-create' id=project.id %}" class="btn btn-add">Add New Task</a>
-    <a href="{% url 'project-update' pk=project.pk %}" class="btn btn-edit">Edit Project</a>
-    <a href="{% url 'project-delete' pk=project.pk %}" class="btn btn-delete">Delete Project</a>
-  </div>
-  
-  </div>
-{% endblock %} {% endcomment %}
-
-
 {% extends 'projectmanager/base.html' %}
-{% set title = project.name %}
 
 {% block content %}
-  <h1>{{ project.name }}</h1>
-  <p>Managed by: {{ project.managed_project.username }}</p>
-  <p>Created on: {{ project.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-  <p>{{ project.description }}</p>
+<div class="col">
+    <!-- Project Details Card -->
+    <div class="card h-100 shadow bg-light mb-4"> <!-- Added mb-4 for margin bottom -->
+        <div class="card-body">
+            <h2 class="card-title">Project Name: {{ project.project_name }}</h2>
+            <p class="card-text">Managed by: {{ project.managed_project.username }}</p>
+            <p class="card-text">Created on: {{ project.created_at }}</p>
+            <p class="card-text">Project description: {{ project.description }}</p>
 
+            <!-- Project Action Buttons -->
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{% url 'project-update' project.id %}" class="btn btn-primary">Edit Project</a>
+                <a href="{% url 'task-create' project.id %}" class="btn btn-primary">Add New Task</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Card -->
+    <div class="card h-100 shadow bg-light">
+        <div class="card-body">
+            <h2 class="card-title">Tasks</h2>
+            {% if project.tasks.all %}
+                <ul>
+                    {% for task in project.tasks.all %}
+                        <li class="task-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ task.task_name }}</strong>  {{ task.description }}
+                                <br />Due Date: {{ task.due_date }}
+                                <br />Status: {{ task.get_status_display }}
+                                <br />Assigned to: {{ task.managed_task.username }}
+                            </div>
+                            <a href="{% url 'task-update' project.id task.id %}" class="btn btn-primary">Edit Task</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No tasks found for this project.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+{% comment %} 
+
+          {% if project.tasks %}
+            <ul>
+              {% for task in project.tasks.all %}
+                <li class="task-item">
+                  <strong>{{ task.name }}</strong> - {{ task.description }}
+                  <br />Status: {{ task.status }}
+                  <br />Assigned to: {{ task.managed_task.username }}
+                  <a href="{% url 'task-update' project.id task.id %}" class="btn btn-primary">Edit Task</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No tasks found for this project.</p>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+{% endblock %} {% endcomment %}
+{% comment %} 
+  <h1>{{ project.project_name }}</h1>
+  <p>Managed by: {{ project.managed_project.username }}</p>
+  <p>Created on: {{ project.created_at }}</p>
+  <p>Project description: {{ project.description }}</p>
+
+  
   <h2>Tasks</h2>
   {% if project.tasks %}
     <ul>
-      {% for task in project.tasks %}
+      {% for task in project.tasks.all %}
         <li class="task-item">
           <strong>{{ task.name }}</strong> - {{ task.description }}
           <br />Status: {{ task.status }}
           <br />Assigned to: {{ task.managed_task.username }}
           {% if allow_edit %}
             <div class="task-actions">
-              <a href="{{ url_for('edit_task_action', project_id = project.project_id, task_id = task.task_id) }}" class="btn btn-edit">Edit Task</a>
+              <a href="{% url 'task-update' project.id task.id %}" class="btn btn-edit">Edit Task</a>
             </div>
           {% endif %}
         </li>
@@ -54,9 +97,9 @@
 
   {% if allow_edit %}
     <div class="project-actions">
-      <a href="{{ url_for('edit_page', project_id = project.project_id) }}" class="btn btn-edit">Edit Project</a>
-      <a href="{{ url_for('create_task_page', project_id = project.project_id) }}" class="btn btn-add">Add New Task</a>
+    <a href="{% url 'project-update' project.id %}" class="btn btn-edit">Edit Project</a>
+    <a href="{% url 'task-create' project.id %}" class="btn btn-add">Add New Task</a>
     </div>
   {% endif %}
 {% endblock %}
-
+{% endcomment %}

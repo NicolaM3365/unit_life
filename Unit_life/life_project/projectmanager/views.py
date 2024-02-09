@@ -1,6 +1,6 @@
 # views.py
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Project
@@ -101,7 +101,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     fields = ['project_name', 'description', 'start_date', 'end_date', 'status', 'managed_project']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user # Set the author on the form
+        form.instance.managed_project = self.request.user # Set the author on the form
         return super().form_valid(form) # Validate form by running form_valid method from parent class.
 
 class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -115,18 +115,18 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         post = self.get_object()
         # return self.request.user == post.author
-        if self.request.user == post.author:
+        if self.request.user == post.managed_project:
             return True
         return False
 
 class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Project
-    success_url = "/"
+    success_url = "project-list"
 
     def test_func(self):
         post = self.get_object()
         # return self.request.user == post.author
-        if self.request.user == post.author:
+        if self.request.user == post.managed_project:
             return True
         return False
 
@@ -144,7 +144,7 @@ class TaskListView(ListView):
 
     def get_queryset(self):
         # Assuming each task is related to a project
-        return Task.objects.filter(project_id=self.kwargs['project_id']).order_by('-start_date')
+        return Task.objects.filter(project_id=self.kwargs['project_id']).order_by('due_date')
 
 class TaskDetailView(DetailView):
     model = Task
@@ -152,7 +152,7 @@ class TaskDetailView(DetailView):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title', 'description', 'status', 'due_date']  # Adjust fields as necessary
+    fields = ['task_name', 'description', 'status', 'due_date']  # Adjust fields as necessary
 
     def form_valid(self, form):
         form.instance.project_id = self.kwargs['project_id']  # Assuming a ForeignKey to Project
@@ -160,7 +160,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
-    fields = ['title', 'description', 'status', 'due_date']  # Adjust fields as necessary
+    fields = ['task_name', 'description', 'status', 'due_date']  # Adjust fields as necessary
 
     def form_valid(self, form):
         form.instance.project_id = self.kwargs['project_id']
@@ -174,13 +174,22 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
-    success_url = "/"  # Redirect to a suitable URL after deletion
+    template_name = 'projectmanager/task_confirm_delete.html'
+    def get_success_url(self):
+        # Assuming the task model has a ForeignKey to Project as `project`
+        return reverse('project-detail', kwargs={'pk': self.object.project.pk})
+    
+
+
+        # Example: return reverse('project-detail', kwargs={'pk': self.object.project.pk}) 
+    # success_url = "project/<int:pk>"  # Redirect to a suitable URL after deletion
 
     def test_func(self):
         task = self.get_object()
         # Implement your logic to check if the user has permission to delete the task
         # Example: return self.request.user == task.assigned_user
         return True
+
 
 
 

@@ -41,6 +41,7 @@ class Project(models.Model):
     
     def get_absolute_url(self): # Change here
         return reverse('project-detail', kwargs={'pk': self.pk}) # Change here to bring the user to the post detail view
+    
     @classmethod
     def get_project_lengths(cls):
         # Using Django's annotate and F expressions to calculate lengths
@@ -68,25 +69,6 @@ def get_default_user():
 
 def one_week_from_today():
         return timezone.now() + timedelta(weeks=1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -151,7 +133,7 @@ class Task(models.Model):
     # Due date for the task
     due_date = models.DateField(default=one_week_from_today)
     
-    
+
     
     # Task priority could be a choice field to have specific priorities
     PRIORITY_CHOICES = [
@@ -169,9 +151,15 @@ class Task(models.Model):
         ('BL', 'Blocked'),
     ]
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='NT')
+    
 
     def __str__(self):
         return self.task_name
+    
+    def get_absolute_url(self):
+                return reverse('task-detail', kwargs={'pk': self.pk, 'project_id': self.project_id})
+
+        
     
 class TaskComment(models.Model):
     # Defining the fields for the model

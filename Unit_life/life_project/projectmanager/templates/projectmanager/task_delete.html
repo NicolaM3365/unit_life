@@ -1,0 +1,10 @@
+{% extends "projectmanager/base.html" %}
+
+{% block content %}
+  <h2>Task Deleted</h2>
+  <p>"{{ object.task_name }}"</p>
+  
+  <a href="{% url 'project-detail' object.project.pk %}" class="btn btn-secondary">Project</a>
+
+{% endblock %}
+

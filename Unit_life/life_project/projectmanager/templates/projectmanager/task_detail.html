@@ -3,6 +3,8 @@
   <h2>{{ task.task_name }}</h2>
   <p>{{ task.description }}</p>
   <!-- Add more task details here -->
-  <a href="{% url 'task-update' task.id %}">Edit</a>
-  <a href="{% url 'task-delete' task.id %}">Delete</a>
+  <a href="{% url 'task-update' task.project_id task.id %}">Edit</a>
+  <a href="{% url 'task-delete' task.project_id task.id %}">Delete</a>
+  <a href="{% url 'task-create' task.project_id %}">Create New Task</a>
+  <a href="{% url 'project-detail' task.project_id %}">Back to Project</a>
 {% endblock %}
