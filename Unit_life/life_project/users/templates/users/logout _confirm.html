@@ -1,12 +1,10 @@
+{% extends 'landingpage/base.html' %}
 
-{% extends "landingpage/base.html" %}
 {% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-             Login again <a href="{% url 'login' %}">Sign In</a>
-        </small>
-    </div>
-{% endblock content %}
-
-
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to log out?</p>
+    <button type="submit">Confirm Logout</button>
+</form>
+<a href="{% url 'profile' %}">Cancel</a>
+{% endblock %}

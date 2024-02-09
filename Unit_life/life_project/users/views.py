@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm #import forms
 from django.contrib import messages #import for messages
@@ -42,3 +43,10 @@ def profile(request):
 
     return render(request, 'users/profile.html', context)
 
+
+@login_required
+def logout_confirm(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')  # Redirect to login or home page after logout
+    return render(request, 'users/logout_confirm.html')

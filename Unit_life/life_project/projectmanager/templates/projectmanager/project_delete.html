@@ -1,0 +1,13 @@
+{% extends "projectmanager/base.html" %}
+
+{% block content %}
+  <h2>Project Deleted</h2>
+  <p>"{{ object.project_name }}"</p>
+
+    {% if request.user == object.managed_project %}
+      <a href="{% url 'project-detail' object.pk %}" class="btn btn-secondary">Project</a>
+  {% endif %}
+
+  
+{% endblock %}
+

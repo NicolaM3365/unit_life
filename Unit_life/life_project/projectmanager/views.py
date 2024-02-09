@@ -1,8 +1,11 @@
 # views.py
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseForbidden
 from .models import Project
 import statistics
 
@@ -32,29 +35,6 @@ def project_list(request):
     
     return render(request, 'projectmanager/project_list.html', {'projects': projects})
 
-# def project_detail(request, project_id):
-#     project = Project.objects.get(id=project_id)
-#     return render(request, 'projectmanager/project_detail.html', {'project': project})  
-# # Path: Unit_life/life_project/projectmanager/views.py
-
-
-# def task_list(request, project_id):
-#     project = Project.objects.get(id=project_id)
-#     tasks = project.tasks.all()
-#     return render(request, 'projectmanager/task_list.html', {'project': project, 'tasks': tasks})
-
-# def task_detail(request, project_id, task_id):
-#     task = Task.objects.get(id=task_id)
-#     return render(request, 'projectmanager/task_detail.html', {'task': task})
-
-# def comment_list(request, project_id, task_id):
-#     task = Task.objects.get(id=task_id)
-#     comments = task.comments.all()
-#     return render(request, 'projectmanager/comment_list.html', {'task': task, 'comments': comments})    
-# def attachment_list(request, project_id, task_id):
-#     task = Task.objects.get(id=task_id)
-#     attachments = task.attachments.all()
-#     return render(request, 'projectmanager/attachment_list.html', {'task': task, 'attachments': attachments})   
 
 
 
@@ -108,25 +88,32 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     fields = ['project_name', 'description', 'start_date', 'end_date', 'status']
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user # Set the author on the form
-        return super().form_valid(form) # Validate form by running form_valid method from parent class.
+    # def form_valid(self, form):
+    #     form.instance.managed_project = self.request.user # Set the author on the form
+    #     return super().form_valid(form) # Validate form by running form_valid method from parent class.
+
 
     def test_func(self):
-        post = self.get_object()
-        # return self.request.user == post.author
-        if self.request.user == post.managed_project:
-            return True
-        return False
+        project = self.get_object()
+        # Implement your logic to check if the user has permission to update the task
+        # Example: return self.request.user == task.assigned_user
+        return self.request.user == project.managed_project
+
+
+
+
+
+
 
 class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Project
-    success_url = "project-list"
+    template_name = 'projectmanager/project_confirm_delete.html'
+    success_url = reverse_lazy("project-list")
 
     def test_func(self):
-        post = self.get_object()
+        project = self.get_object()
         # return self.request.user == post.author
-        if self.request.user == post.managed_project:
+        if self.request.user == project.managed_project:
             return True
         return False
 
@@ -154,6 +141,25 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['task_name', 'description', 'status', 'due_date']  # Adjust fields as necessary
 
+    def test_func(self):
+        # Retrieve the project using the project_id from URL kwargs
+        project_id = self.kwargs['project_id']
+        project = Project.objects.get(pk=project_id)
+
+        # Check if the current user is the manager of the project
+        return self.request.user == project.managed_project
+
+    # def handle_no_permission(self):
+    #     # Optionally, you can provide a custom response when the user fails the test
+    #     return HttpResponseForbidden("You are not allowed to create tasks for this project.")
+    
+    def handle_no_permission(self):
+        # Add a message to display on the redirected page
+        messages.error(self.request, "You do not have permission to create tasks for this project.")
+        # Redirect to a specific URL, such as the home page
+        return redirect('home')  
+
+
     def form_valid(self, form):
         form.instance.project_id = self.kwargs['project_id']  # Assuming a ForeignKey to Project
         return super().form_valid(form)
@@ -170,7 +176,7 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         task = self.get_object()
         # Implement your logic to check if the user has permission to update the task
         # Example: return self.request.user == task.assigned_user
-        return True
+        return self.request.user == task.project.managed_project
 
 class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
@@ -188,7 +194,7 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         task = self.get_object()
         # Implement your logic to check if the user has permission to delete the task
         # Example: return self.request.user == task.assigned_user
-        return True
+        return self.request.user == task.project.managed_project
 
 
 

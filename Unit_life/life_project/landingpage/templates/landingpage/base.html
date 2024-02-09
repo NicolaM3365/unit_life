@@ -38,11 +38,11 @@
                     <a class="nav-item nav-link" href="{% url 'projectmanager-home' %}">Project Manager</a>
                     <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
                     <a class="nav-item nav-link" href="{% url 'messaging-home' %}">Messaging</a>
-                    {% comment %} <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> {% endcomment %}
-                    <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% comment %} <form action="{% url 'logout' %}" method="POST" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="nav-item nav-link" style="background:none!important; border:none; padding:0!important; font-family:inherit; font-size:inherit; cursor:pointer;">Logout</button>
-                    </form>
+                    </form> {% endcomment %}
                     <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>

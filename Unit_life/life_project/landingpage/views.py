@@ -12,3 +12,4 @@ def about(request):
 
 def accordian(request):
     return render(request, 'landingpage/accordian.html', {'title': 'Accordian'})
+
